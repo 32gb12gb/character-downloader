@@ -214,19 +214,26 @@ function json2vox(dim, obj)
         };
 
         // check min-max
-        if(ctx.pos_min.x > element['x'])
-            ctx.pos_min.x = element['x'];
-        if(ctx.pos_min.y > element['y'])
-            ctx.pos_min.y = element['y'];
-        if(ctx.pos_min.z > element['z'])
-            ctx.pos_min.z = element['z'];
+        //if(ctx.pos_min.x > element['x'])
+        //    ctx.pos_min.x = element['x'];
+        //if(ctx.pos_min.y > element['y'])
+        //    ctx.pos_min.y = element['y'];
+        //if(ctx.pos_min.z > element['z'])
+        //    ctx.pos_min.z = element['z'];
 
-        if(ctx.pos_max.x < element['x'])
-            ctx.pos_max.x = element['x'];
-        if(ctx.pos_max.y < element['y'])
-            ctx.pos_max.y = element['y'];
-        if(ctx.pos_max.z < element['z'])
-            ctx.pos_max.z = element['z'];
+        //if(ctx.pos_max.x < element['x'])
+        //    ctx.pos_max.x = element['x'];
+        //if(ctx.pos_max.y < element['y'])
+        //    ctx.pos_max.y = element['y'];
+        //if(ctx.pos_max.z < element['z'])
+        //    ctx.pos_max.z = element['z'];
+        ctx.pos_min.x = -1;
+        ctx.pos_min.y = -1;
+        ctx.pos_min.z = -1;
+
+        ctx.pos_max.x = 16;
+        ctx.pos_max.y = 16;
+        ctx.pos_max.z = 16;
     });
 
     console.log('ctx.pos_max=', ctx.pos_max, ' ctx.pos_min=', ctx.pos_min);
@@ -277,8 +284,7 @@ function json2vox(dim, obj)
 
 function start_convert_json()
 {
-    var dim_select = document.getElementById("dim");
-    var dim = parseInt(dim_select.options[dim_select.selectedIndex].value);
+    var dim = 16;
     var src = document.getElementById("src");
     var obj = JSON.parse(src.value);
     if(!obj)
@@ -768,12 +774,7 @@ function downloadFile(blob, filename, mime) {
         
         <hr>
         <h2>JSON to VOX</h2>
-        <p>Box dimentions:
-            <select id="dim">
-<!--                 <option value="256">256 x 256 x 256</option> -->
-                <option value="16">16 x 16 x 16</option>
-            </select>
-        </p>
+        
         <p>
             <button onClick="trig_convert_json_files()">Convert JSON to VOX from files</button>
             <button onClick="start_convert_json()" style="margin-left: 40px;">Convert JSON to VOX from text</button>
