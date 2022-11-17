@@ -650,13 +650,57 @@ function trig_convert_json_files()
 {
     document.getElementById("json_files").click();
 }
-
+function GetIDsBySeparator(obj,separator)
+{
+	var buf = obj.split(separator);
+	var buf2 = new Array();
+	var count = 0;
+	for(var i in buf)
+	{
+	
+		let tem1 = String(buf[i]);
+		console.log(separator);
+		console.log(tem1);
+		console.log(Object.keys(buf[i]).length < 22);
+		
+		if(count != 0)
+		{
+			if(Object.keys(buf[i]).length >= 20)
+			{
+				buf2.push(tem1.substring(0,20));
+			}
+		}
+		count = count + 1;
+	}
+	return buf2;
+}
 function download_json_from_url()
 {
-    var url_elem = document.getElementById("url");
+    var url_elem = document.getElementById("url");// получаем стрингу с текста 
+
 	var realURL = "https://better-space-api.herokuapp.com/api/models/";
-    var url = url_elem.value;
-	realURL = realURL + url.substring(0,4) + "/"+url.substring(4);
+    var IDs = url_elem.value;
+	
+	IDs = IDs.replace(/ /g,'');
+	IDs = IDs.replace(/(\r\n|\n|\r)/gm, "");
+	IDs = IDs.replace(/,/g, '');
+	IDs = IDs.replace(/\./g, '');
+	IDs = IDs.replace(/\;/g, '');
+	IDs = IDs.replace(/\'/g, '');
+	
+	///HEAD-NGqGCyFNuwmAO8OcyxV LEGS-NEv9h3hZq9cZEMoAcno . ,BODY-NEv84cUpYe6g-fcZbvX ; BODY-NEv806rhGZ2ENS2i_GS
+	
+	var HEADids = GetIDsBySeparator(IDs,'HEAD');
+	var ARMSids = GetIDsBySeparator(IDs,'ARMS');
+	var BODYids = GetIDsBySeparator(IDs,'BODY');
+	var LEGSids = GetIDsBySeparator(IDs,'LEGS');
+	console.log(HEADids);
+	console.log(ARMSids);
+	console.log(BODYids);
+	console.log(LEGSids);
+
+	
+	realURL = realURL + IDs.substring(0,4) + "/"+IDs.substring(4);
     var xmlHttp = new XMLHttpRequest();
 
     url_elem.setAttribute("disabled","disabled");
@@ -677,7 +721,7 @@ function download_json_from_url()
 	
 	
     src.value = JSON.stringify(rawVoxs);
-
+	start_convert_json();
     url_elem.removeAttribute("disabled");
 }
 
@@ -736,7 +780,9 @@ function downloadFile(blob, filename, mime) {
         </p>
         <hr>
         <h2>Download JSON text from URL</h2>
-        <p> ID: <input type="text" size="40" id="url" value="LEGS-NG7wXvpbRQWOKPCB8Eq"></p>
+		<p> Вставьте сюда айдишники (HEAD,ARMS,BODY,LEGS) <p>
+        <textarea id="url" rows="30" style="width: 100%;"></textarea>
+        
         <button onClick="download_json_from_url();">Download</button>
     </td>
     <td width="50%"><h2>JSON text <u><span id="json_file_name"></span></u></h2><textarea id="src" rows="30" style="width: 100%;"></textarea></td>
