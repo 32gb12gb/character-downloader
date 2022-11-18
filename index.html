@@ -746,7 +746,30 @@ function download_json_from_url()
 
     const zip = new JSZip();
 
-    
+    globalCREATED_PART = "HEAD";
+    realURL = realURL + globalCREATED_PART + "/" + HEADids[0];
+    var xmlHttp = new XMLHttpRequest();
+
+    url_elem.setAttribute("disabled", "disabled");
+    xmlHttp.onload = (e) => {
+
+        var src = document.getElementById("src");
+        console.log(xmlHttp.responseText);
+        var Model = JSON.parse(xmlHttp.responseText);
+
+        var rawVoxs = [];
+        Model.vox_model_data.vox_unit_datas.forEach((element) => {
+            console.log(element)
+            var rawvox = new RawVoxels((element.x * 16 + element.z) * 16 - element.y, element.color)
+            rawVoxs.push(rawvox);
+        })
+
+
+        src.value = JSON.stringify(rawVoxs);
+        zip.file(globalCREATED_PART + HEADids[0] + '.vox', start_convert_json());
+    };
+    xmlHttp.open("GET", realURL, true); // false for synchronous request
+    xmlHttp.send(null);
 
     for (var i in HEADids) {
         globalCREATED_PART = "HEAD";
@@ -755,6 +778,7 @@ function download_json_from_url()
 
         url_elem.setAttribute("disabled", "disabled");
         xmlHttp.onload = (e) => {
+
             var src = document.getElementById("src");
             console.log(xmlHttp.responseText);
             var Model = JSON.parse(xmlHttp.responseText);
