@@ -262,7 +262,7 @@ function json2vox(dim, obj)
                 ctx.pos_min.y = 1;
                 ctx.pos_min.z = 1;
 
-                ctx.pos_max.x = 16;
+                ctx.pos_max.x = 8;
                 ctx.pos_max.y = 10;
                 ctx.pos_max.z = 13;
                 break;
@@ -317,9 +317,9 @@ function json2vox(dim, obj)
     return bytes;
 }
 
-function start_convert_json()
+function start_convert_json(_dim)
 {
-    var dim = 16;
+    var dim = _dim;
     var src = document.getElementById("src");
     var obj = JSON.parse(src.value);
     if(!obj)
@@ -789,13 +789,13 @@ function download_json_from_url()
         var rawVoxs = [];
         Model.vox_model_data.vox_unit_datas.forEach((element) => {
             console.log(element)
-            var rawvox = new RawVoxels(((16 - element.x) * 16 + element.z) * 16 - element.y, element.color)// попытка убрать отзеркаливание
+            var rawvox = new RawVoxels(((16 - element.x + 1) * 16 + element.z) * 16 - element.y, element.color)// попытка убрать отзеркаливание
             rawVoxs.push(rawvox);
         })
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + HEADids[i] + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + HEADids[i] + '.vox', start_convert_json(16));
 
     }
     for (var i in ARMSids) {
@@ -813,13 +813,13 @@ function download_json_from_url()
         var rawVoxs = [];
         Model.vox_model_data.vox_unit_datas.forEach((element) => {
             console.log(element)
-            var rawvox = new RawVoxels(((8 - element.x) * 8 + element.z) * 8 - element.y, element.color)// попытка настроить правильно размер чанка руки
+            var rawvox = new RawVoxels(((8 - element.x + 1) * 8 + element.z) * 8 - element.y, element.color)// попытка настроить правильно размер чанка руки
             rawVoxs.push(rawvox);
         })
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + ARMSids[i] + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + ARMSids[i] + '.vox', start_convert_json(8));
 
 
     }
@@ -838,13 +838,13 @@ function download_json_from_url()
         var rawVoxs = [];
         Model.vox_model_data.vox_unit_datas.forEach((element) => {
             console.log(element)
-            var rawvox = new RawVoxels(((16 - element.x) * 16 + element.z) * 16 - element.y, element.color)
+            var rawvox = new RawVoxels(((16 - element.x + 1) * 16 + element.z) * 16 - element.y, element.color)
             rawVoxs.push(rawvox);
         })
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + BODYids[i] + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + BODYids[i] + '.vox', start_convert_json(16));
 
 
     }
@@ -863,13 +863,13 @@ function download_json_from_url()
         var rawVoxs = [];
         Model.vox_model_data.vox_unit_datas.forEach((element) => {
             console.log(element)
-            var rawvox = new RawVoxels(((10 - element.x) * 10 + element.z) * 10 - element.y, element.color)//и ноги
+            var rawvox = new RawVoxels(((10 - element.x + 1) * 10 + element.z) * 10 - element.y, element.color)//и ноги
             rawVoxs.push(rawvox);
         })
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + LEGSids[i] + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + LEGSids[i] + '.vox', start_convert_json(10));
 
 
     }
