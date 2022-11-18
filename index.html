@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
     const ver = 150;
-    var globalCREATED_PART = "";
+    var globalCREATED_PART = "HEAD";
 class RawVoxels
 {
 	constructor(i ,c)
@@ -334,18 +334,14 @@ function start_convert_json()
 
             var time = new Date().getTime();
 
-            const zip = new JSZip();
+            
 
-            zip.file('somename.vox', blob);
-            zip.generateAsync({ type: 'blob' }).then(function (content) {
-                FileSaver.saveAs(content, 'somename.zip');
-            });
-
-            downloadFile(blob, 'demo-' + time + '.vox', 'application/octet-stream');
+            //downloadFile(blob, 'demo-' + time + '.vox', 'application/octet-stream');
         }
         else
             alert("Not array of object!");
     }
+    return blob;
 }
 
 function get_tag(buf, pos)
@@ -746,37 +742,116 @@ function download_json_from_url()
 	console.log(HEADids);
 	console.log(ARMSids);
 	console.log(BODYids);
-	console.log(LEGSids);
+    console.log(LEGSids);
+
+    const zip = new JSZip();
+
+    
 
     for (var i in HEADids) {
         globalCREATED_PART = "HEAD";
+        realURL = realURL + globalCREATED_PART + "/" + i;
+        var xmlHttp = new XMLHttpRequest();
+
+        url_elem.setAttribute("disabled", "disabled");
+
+        xmlHttp.open("GET", realURL, false); // false for synchronous request
+        xmlHttp.send(null);
+
+        var src = document.getElementById("src");
+
+        var Model = JSON.parse(xmlHttp.responseText);
+
+        var rawVoxs = [];
+        Model.vox_model_data.vox_unit_datas.forEach((element) => {
+            console.log(element)
+            var rawvox = new RawVoxels((element.x * 16 + element.z) * 16 - element.y, element.color)
+            rawVoxs.push(rawvox);
+        })
 
 
+        src.value = JSON.stringify(rawVoxs);
+        zip.file(globalCREATED_PART i + '.vox', start_convert_json());
+    }
+    for (var i in ARMSids) {
+        globalCREATED_PART = "ARMS";
+        realURL = realURL + globalCREATED_PART + "/" + i;
+        var xmlHttp = new XMLHttpRequest();
+
+        url_elem.setAttribute("disabled", "disabled");
+
+        xmlHttp.open("GET", realURL, false); // false for synchronous request
+        xmlHttp.send(null);
+
+        var src = document.getElementById("src");
+
+        var Model = JSON.parse(xmlHttp.responseText);
+
+        var rawVoxs = [];
+        Model.vox_model_data.vox_unit_datas.forEach((element) => {
+            console.log(element)
+            var rawvox = new RawVoxels((element.x * 16 + element.z) * 16 - element.y, element.color)
+            rawVoxs.push(rawvox);
+        })
+
+
+        src.value = JSON.stringify(rawVoxs);
+        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
+    }
+    for (var i in BODYids) {
+        globalCREATED_PART = "BODY";
+        realURL = realURL + globalCREATED_PART + "/" + i;
+        var xmlHttp = new XMLHttpRequest();
+
+        url_elem.setAttribute("disabled", "disabled");
+
+        xmlHttp.open("GET", realURL, false); // false for synchronous request
+        xmlHttp.send(null);
+
+        var src = document.getElementById("src");
+
+        var Model = JSON.parse(xmlHttp.responseText);
+
+        var rawVoxs = [];
+        Model.vox_model_data.vox_unit_datas.forEach((element) => {
+            console.log(element)
+            var rawvox = new RawVoxels((element.x * 16 + element.z) * 16 - element.y, element.color)
+            rawVoxs.push(rawvox);
+        })
+
+
+        src.value = JSON.stringify(rawVoxs);
+        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
+    }
+    for (var i in LEGSids) {
+        globalCREATED_PART = "LEGS";
+        realURL = realURL + globalCREATED_PART + "/" + i;
+        var xmlHttp = new XMLHttpRequest();
+
+        url_elem.setAttribute("disabled", "disabled");
+
+        xmlHttp.open("GET", realURL, false); // false for synchronous request
+        xmlHttp.send(null);
+
+        var src = document.getElementById("src");
+
+        var Model = JSON.parse(xmlHttp.responseText);
+
+        var rawVoxs = [];
+        Model.vox_model_data.vox_unit_datas.forEach((element) => {
+            console.log(element)
+            var rawvox = new RawVoxels((element.x * 16 + element.z) * 16 - element.y, element.color)
+            rawVoxs.push(rawvox);
+        })
+
+
+        src.value = JSON.stringify(rawVoxs);
+        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
     }
 
-
-	realURL = realURL + IDs.substring(0,4) + "/"+IDs.substring(4);
-    var xmlHttp = new XMLHttpRequest();
-
-    url_elem.setAttribute("disabled","disabled");
-
-    xmlHttp.open( "GET", realURL, false ); // false for synchronous request
-    xmlHttp.send( null );
-
-    var src = document.getElementById("src");
-	
-	var Model = JSON.parse(xmlHttp.responseText);
-	
-	var rawVoxs = [];
-	Model.vox_model_data.vox_unit_datas.forEach((element) => {
-		console.log(element)
-		var rawvox = new RawVoxels((element.x * 16 + element.z ) * 16 - element.y , element.color)
-		rawVoxs.push(rawvox);
-	})
-	
-	
-    src.value = JSON.stringify(rawVoxs);
-	start_convert_json();
+    zip.generateAsync({ type: 'blob' }).then(function (content) {
+        saveAs(content, 'somename.zip');
+    });
     url_elem.removeAttribute("disabled");
 }
 
