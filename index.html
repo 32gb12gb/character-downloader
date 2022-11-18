@@ -779,8 +779,8 @@ function download_json_from_url()
         var xmlHttp = new XMLHttpRequest();
 
 
-        console.log(realURL + globalCREATED_PART + "/" + i);
-        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + i, false); // false for synchronous request
+        console.log(realURL + globalCREATED_PART + "/" + HEADids[i]);
+        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + HEADids[i], false); // false for synchronous request
         xmlHttp.send(null);
         var src = document.getElementById("src");
         console.log(xmlHttp.responseText);
@@ -795,7 +795,7 @@ function download_json_from_url()
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + HEADids[i] + '.vox', start_convert_json());
 
     }
     for (var i in ARMSids) {
@@ -803,8 +803,8 @@ function download_json_from_url()
         var xmlHttp = new XMLHttpRequest();
 
 
-        console.log(realURL + globalCREATED_PART + "/" + i);
-        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + i, false); // false for synchronous request
+        console.log(realURL + globalCREATED_PART + "/" + ARMSids[i]);
+        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + ARMSids[i], false); // false for synchronous request
         xmlHttp.send(null);
         var src = document.getElementById("src");
         console.log(xmlHttp.responseText);
@@ -819,7 +819,7 @@ function download_json_from_url()
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + ARMSids[i] + '.vox', start_convert_json());
 
 
     }
@@ -828,8 +828,8 @@ function download_json_from_url()
         var xmlHttp = new XMLHttpRequest();
 
 
-        console.log(realURL + globalCREATED_PART + "/" + i);
-        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + i, false); // false for synchronous request
+        console.log(realURL + globalCREATED_PART + "/" + BODYids[i]);
+        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + BODYids[i], false); // false for synchronous request
         xmlHttp.send(null);
         var src = document.getElementById("src");
         console.log(xmlHttp.responseText);
@@ -844,7 +844,7 @@ function download_json_from_url()
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + BODYids[i] + '.vox', start_convert_json());
 
 
     }
@@ -853,8 +853,8 @@ function download_json_from_url()
         var xmlHttp = new XMLHttpRequest();
 
 
-        console.log(realURL + globalCREATED_PART + "/" + i);
-        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + i, false); // false for synchronous request
+        console.log(realURL + globalCREATED_PART + "/" + LEGSids[i]);
+        xmlHttp.open("GET", realURL + globalCREATED_PART + "/" + LEGSids[i], false); // false for synchronous request
         xmlHttp.send(null);
         var src = document.getElementById("src");
         console.log(xmlHttp.responseText);
@@ -869,7 +869,7 @@ function download_json_from_url()
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + LEGSids[i] + '.vox', start_convert_json());
 
 
     }
