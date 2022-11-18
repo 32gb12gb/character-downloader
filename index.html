@@ -759,7 +759,7 @@ function download_json_from_url()
         xmlHttp.send(null);
 
         var src = document.getElementById("src");
-
+        console.log(xmlHttp.responseText);
         var Model = JSON.parse(xmlHttp.responseText);
 
         var rawVoxs = [];
