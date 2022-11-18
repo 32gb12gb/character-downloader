@@ -771,7 +771,7 @@ function download_json_from_url()
 
 
         src.value = JSON.stringify(rawVoxs);
-        zip.file(globalCREATED_PART i + '.vox', start_convert_json());
+        zip.file(globalCREATED_PART + i + '.vox', start_convert_json());
     }
     for (var i in ARMSids) {
         globalCREATED_PART = "ARMS";
