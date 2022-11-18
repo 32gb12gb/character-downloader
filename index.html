@@ -873,9 +873,15 @@ function download_json_from_url()
 
 
     }
-
+    var today = new Date();
+    var gen_name = "voxs_";
+    gen_name = gen_name + today.getFullYear() + ":";
+    gen_name = gen_name + today.getMonth() + ":";
+    gen_name = gen_name + today.getDay() + ":";
+    gen_name = gen_name + today.getHours() + ":";
+    gen_name = gen_name + today.getMinutes();
     zip.generateAsync({ type: 'blob' }).then(function (content) {
-        saveAs(content, 'somename.zip');
+        saveAs(content, gen_name + '.zip');
     });
     url_elem.removeAttribute("disabled");
 }
