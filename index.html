@@ -2,9 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>JSON ft VOX</title>
+    
 <script type="text/javascript">
 
-const ver = 150;
+    const ver = 150;
+    var globalCREATED_PART = "";
 class RawVoxels
 {
 	constructor(i ,c)
@@ -227,13 +229,46 @@ function json2vox(dim, obj)
         //    ctx.pos_max.y = element['y'];
         //if(ctx.pos_max.z < element['z'])
         //    ctx.pos_max.z = element['z'];
-        ctx.pos_min.x = 1;
-        ctx.pos_min.y = 1;
-        ctx.pos_min.z = 1;
+        switch (globalCREATED_PART) {
+            case "HEAD":
+                ctx.pos_min.x = 1;
+                ctx.pos_min.y = 1;
+                ctx.pos_min.z = 1;
 
-        ctx.pos_max.x = 16;
-        ctx.pos_max.y = 16;
-        ctx.pos_max.z = 16;
+                ctx.pos_max.x = 16;
+                ctx.pos_max.y = 16;
+                ctx.pos_max.z = 16;
+                break;
+            case "ARMS":
+                ctx.pos_min.x = 1;
+                ctx.pos_min.y = 1;
+                ctx.pos_min.z = 1;
+
+                ctx.pos_max.x = 8;
+                ctx.pos_max.y = 8;
+                ctx.pos_max.z = 16;
+                break;
+            case "BODY":
+                ctx.pos_min.x = 1;
+                ctx.pos_min.y = 1;
+                ctx.pos_min.z = 1;
+
+                ctx.pos_max.x = 16;
+                ctx.pos_max.y = 16;
+                ctx.pos_max.z = 24;
+                break;
+            case "LEGS":
+                ctx.pos_min.x = 1;
+                ctx.pos_min.y = 1;
+                ctx.pos_min.z = 1;
+
+                ctx.pos_max.x = 16;
+                ctx.pos_max.y = 10;
+                ctx.pos_max.z = 13;
+                break;
+            default:
+        }
+        
     });
 
     console.log('ctx.pos_max=', ctx.pos_max, ' ctx.pos_min=', ctx.pos_min);
@@ -298,6 +333,14 @@ function start_convert_json()
             var blob = new Blob([bytes], {type: 'application/octet-stream'});
 
             var time = new Date().getTime();
+
+            const zip = new JSZip();
+
+            zip.file('somename.vox', blob);
+            zip.generateAsync({ type: 'blob' }).then(function (content) {
+                FileSaver.saveAs(content, 'somename.zip');
+            });
+
             downloadFile(blob, 'demo-' + time + '.vox', 'application/octet-stream');
         }
         else
@@ -705,7 +748,13 @@ function download_json_from_url()
 	console.log(BODYids);
 	console.log(LEGSids);
 
-	
+    for (var i in HEADids) {
+        globalCREATED_PART = "HEAD";
+
+
+    }
+
+
 	realURL = realURL + IDs.substring(0,4) + "/"+IDs.substring(4);
     var xmlHttp = new XMLHttpRequest();
 
@@ -767,30 +816,32 @@ function downloadFile(blob, filename, mime) {
 </script>
 </head>
 <body>
-<h1 style="text-align: center">VOX ft JSON</h1>
-<table width="100%" border="0" cellpadding="10px" cellspacing="10px">
-<tr valign="top">
-    <td width="50%">
-        
-        <hr>
-        <h2>JSON to VOX</h2>
-        
-        <p>
-            <button onClick="trig_convert_json_files()">Convert JSON to VOX from files</button>
-            <button onClick="start_convert_json()" style="margin-left: 40px;">Convert JSON to VOX from text</button>
-        </p>
-        <hr>
-        <h2>Download JSON text from URL</h2>
-		<p> Вставьте сюда айдишники (HEAD,ARMS,BODY,LEGS) <p>
-        <textarea id="url" rows="30" style="width: 100%;"></textarea>
-        
-        <button onClick="download_json_from_url();">Download</button>
-    </td>
-    <td width="50%"><h2>JSON text <u><span id="json_file_name"></span></u></h2><textarea id="src" rows="30" style="width: 100%;"></textarea></td>
-</tr>
-</table>
-<input type="file" id="vox_files" name="files[]" multiple style="display: none;"/>
-<input type="file" id="json_files" name="files[]" multiple style="display: none;"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.js"></script>
+    <h1 style="text-align: center">VOX ft JSON</h1>
+    <table width="100%" border="0" cellpadding="10px" cellspacing="10px">
+        <tr valign="top">
+            <td width="50%">
+
+                <hr>
+                <h2>JSON to VOX</h2>
+
+                <p>
+                    <button onClick="trig_convert_json_files()">Convert JSON to VOX from files</button>
+                    <button onClick="start_convert_json()" style="margin-left: 40px;">Convert JSON to VOX from text</button>
+                </p>
+                <hr>
+                <h2>Download JSON text from URL</h2>
+                <p> Вставьте сюда айдишники (HEAD,ARMS,BODY,LEGS) <p>
+                    <textarea id="url" rows="30" style="width: 100%;"></textarea>
+
+                    <button onClick="download_json_from_url();">Download</button>
+            </td>
+            <td width="50%"><h2>JSON text <u><span id="json_file_name"></span></u></h2><textarea id="src" rows="30" style="width: 100%;"></textarea></td>
+        </tr>
+    </table>
+    <input type="file" id="vox_files" name="files[]" multiple style="display: none;" />
+    <input type="file" id="json_files" name="files[]" multiple style="display: none;" />
 </body>
 
 <script type="text/javascript">
