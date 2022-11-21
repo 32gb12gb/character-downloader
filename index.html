@@ -838,7 +838,7 @@ function download_json_from_url()
         var rawVoxs = [];
         Model.vox_model_data.vox_unit_datas.forEach((element) => {
             console.log(element)
-            var rawvox = new RawVoxels(((32 - element.x) * 32 + element.z) * 32 - element.y, element.color)
+            var rawvox = new RawVoxels(((24 - element.x) * 24 + element.z) * 24 - element.y, element.color)
             rawVoxs.push(rawvox);
         })
 
