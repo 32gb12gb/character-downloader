@@ -231,13 +231,13 @@ function json2vox(dim, obj)
         //    ctx.pos_max.z = element['z'];
         switch (globalCREATED_PART) {
             case "HEAD":
-                ctx.pos_min.x = 1;
-                ctx.pos_min.y = 1;
-                ctx.pos_min.z = 1;
+                ctx.pos_min.x = 0;
+                ctx.pos_min.y = 0;
+                ctx.pos_min.z = 0;
 
-                ctx.pos_max.x = 16;
-                ctx.pos_max.y = 16;
-                ctx.pos_max.z = 16;
+                ctx.pos_max.x = 15;
+                ctx.pos_max.y = 15;
+                ctx.pos_max.z = 15;
                 break;
             case "ARMS":
                 ctx.pos_min.x = 8;
@@ -762,7 +762,7 @@ function download_json_from_url()
         var rawVoxs = [];
         Model.vox_model_data.vox_unit_datas.forEach((element) => {
             console.log(element)
-            var rawvox = new RawVoxels(((16 - element.x + 1) * 16 + element.z) * 16 - element.y, element.color)// попытка убрать отзеркаливание
+            var rawvox = new RawVoxels(((16 - element.x) * 16 + element.z) * 16 - element.y, element.color)// попытка убрать отзеркаливание
             rawVoxs.push(rawvox);
         })
 
@@ -836,7 +836,7 @@ function download_json_from_url()
         var rawVoxs = [];
         Model.vox_model_data.vox_unit_datas.forEach((element) => {
             console.log(element)
-            var rawvox = new RawVoxels(((16 - element.x + 1) * 16 + element.z) * 16 - element.y, element.color)//и ноги
+            var rawvox = new RawVoxels(((16 - element.x) * 16 + element.z) * 16 - element.y, element.color)//и ноги
             rawVoxs.push(rawvox);
         })
 
