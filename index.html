@@ -83,7 +83,7 @@ function put_int32le(bin, val)
 {
     var start = bin.length;
     put_tag(bin, '    ');
-    return write_int32le(bin, start, val);
+    return write_int32le(bin, start, val);      
 }
 
 function put_int24le(bin, val)
@@ -135,7 +135,8 @@ function vox_write_size(ctx)
     s += put_int32le(ctx.bin, 1 + ctx.pos_max.x - ctx.pos_min.x);
 
     // size y
-    s += put_int32le(ctx.bin, 1 + ctx.pos_max.y - ctx.pos_min.y);
+    //s += put_int32le(ctx.bin, 1 + ctx.pos_max.y - ctx.pos_min.y);
+    s += put_int32le(ctx.bin, 1 + 50);
 
     // size z
     s += put_int32le(ctx.bin, 1 + ctx.pos_max.z - ctx.pos_min.z);
