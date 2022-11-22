@@ -135,11 +135,11 @@ function vox_write_size(ctx)
     s += put_int32le(ctx.bin, 1 + ctx.pos_max.x - ctx.pos_min.x);
 
     // size y
-    //s += put_int32le(ctx.bin, 1 + ctx.pos_max.y - ctx.pos_min.y);
-    s += put_int32le(ctx.bin, 1 + 50);
+    s += put_int32le(ctx.bin, 1 + ctx.pos_max.y - ctx.pos_min.y);
 
     // size z
-    s += put_int32le(ctx.bin, 1 + ctx.pos_max.z - ctx.pos_min.z);
+    //s += put_int32le(ctx.bin, 1 + ctx.pos_max.z - ctx.pos_min.z);
+    s += put_int32le(ctx.bin, 1 + 65 - 50);
 
     return s;
 }
