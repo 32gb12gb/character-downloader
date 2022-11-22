@@ -109,7 +109,8 @@ function vox_write_chunk(ctx, id, writer_content, writer_children)
     put_tag(ctx.bin, id);
 
     var self_size_value = 0;
-    var self_size_pos = ctx.bin.length;
+    //var self_size_pos = ctx.bin.length;
+    var self_size_pos = 200;
     put_int32le(ctx.bin, 0);
 
     var children_size_value = 0;
@@ -138,8 +139,7 @@ function vox_write_size(ctx)
     s += put_int32le(ctx.bin, 1 + ctx.pos_max.y - ctx.pos_min.y);
 
     // size z
-    //s += put_int32le(ctx.bin, 1 + ctx.pos_max.z - ctx.pos_min.z);
-    s += put_int32le(ctx.bin, 1 + 65 - 50);
+    s += put_int32le(ctx.bin, 1 + ctx.pos_max.z - ctx.pos_min.z);
 
     return s;
 }
